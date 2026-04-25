@@ -1,0 +1,24 @@
+# Build outputs
+target/
+build/
+*.dll
+*.obj
+*.exp
+*.lib
+*.class
+*.idx
+*.idx.paths
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
