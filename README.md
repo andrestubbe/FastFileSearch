@@ -1,4 +1,4 @@
-# FastFileSearch - Native high-speed file search engine with indexed lookup[ALPHA].
+# FastFileSearch - Native high-speed file search engine with indexed lookup [ALPHA].
 
 
 
