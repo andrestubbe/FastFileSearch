@@ -9,6 +9,10 @@ build/
 *.idx
 *.idx.paths
 
+# Root-level build artifacts (should be in build/ directory)
+/fastfilesearch.dll
+/fastfilesearch.obj
+
 # IDE
 .vscode/
 .idea/
