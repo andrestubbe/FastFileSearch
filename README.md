@@ -1,5 +1,7 @@
 # FastFileSearch
 
+Blazing-fast file search engine with indexed lookup, pattern matching, and native acceleration [ALPHA].
+
 [![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
 [![Platform](https://img.shields.io/badge/Platform-Cross%20Platform-lightgrey.svg)]()
@@ -20,7 +22,7 @@
 
 ## Description
 
-FastFileSearch builds Prefix Trie, N-Gram index, Exact Match map, and Ranking engine on top of FastFileIndex. It is the second module in the FastJava file search engine trilogy:
+FastFileSearch is the second module in the FastJava file search engine trilogy:
 
 - **FastFileIndex** - Full filesystem scan → produces a binary, mmap-capable index of all files
 - **FastFileSearch** - Builds Prefix Trie, N-Gram index, Exact Match map, and Ranking engine on top of the index

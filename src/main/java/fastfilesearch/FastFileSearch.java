@@ -1,13 +1,15 @@
 package fastfilesearch;
 
+import fastfileindex.FileIndex;
+
 /**
- * FastFileSearch - Builds Prefix Trie, N-Gram index, Exact Match map, and Ranking engine on top of FastFileIndex.
+ * SearchEngine - Handle-based search engine with Trie, N-Gram, and Ranking.
  * 
- * <p>FastFileSearch is the second module in the FastJava file search engine trilogy:
+ * <p>SearchEngine is the second module in the FastJava file search engine trilogy:
  * <ul>
- *   <li>FastFileIndex - Full filesystem scan → produces a binary, mmap-capable index of all files</li>
- *   <li>FastFileSearch - Builds Prefix Trie, N-Gram index, Exact Match map, and Ranking engine on top of the index</li>
- *   <li>FastFileWatch - Uses USN Journal to keep the index + search structures live-updated with zero rescans</li>
+ *   <li>FileIndex - Full filesystem scan → produces a binary, mmap-capable index of all files</li>
+ *   <li>SearchEngine - Builds Prefix Trie, N-Gram index, Exact Match map, and Ranking engine on top of the index</li>
+ *   <li>WatchService - Uses USN Journal to keep the index + search structures live-updated with zero rescans</li>
  * </ul>
  * 
  * <p>This architecture is similar to Everything, Spotlight, VSCode, and fsearch but modular and embeddable.
@@ -19,119 +21,71 @@ package fastfilesearch;
  *   <li>Exact Match Map - O(1) exact filename lookups</li>
  *   <li>Ranking Engine - Recency, frequency, and path-based scoring</li>
  *   <li>Zero-alloc query execution - Minimal allocations during search</li>
- *   <li>Incremental updates - Integration with FastFileWatch for live updates</li>
+ *   <li>Incremental updates - Integration with WatchService for live updates</li>
  * </ul>
  * 
  * @since 1.0.0
  * @version 1.0.0
  */
-public class FastFileSearch {
-    
-    /**
-     * Search result with ranking score.
-     */
-    public static final class SearchResult {
-        private final String path;
-        private final double score;
-        private final long fileSize;
-        private final long modifiedTime;
-        
-        public SearchResult(String path, double score, long fileSize, long modifiedTime) {
-            this.path = path;
-            this.score = score;
-            this.fileSize = fileSize;
-            this.modifiedTime = modifiedTime;
-        }
-        
-        public String path() { return path; }
-        public double score() { return score; }
-        public long fileSize() { return fileSize; }
-        public long modifiedTime() { return modifiedTime; }
-    }
-    
-    /**
-     * Search options.
-     */
-    public static final class SearchOptions {
-        private int limit = 100;
-        private boolean caseSensitive = false;
-        private boolean fuzzy = true;
-        private boolean includeDirectories = true;
-        private boolean includeFiles = true;
-        
-        public SearchOptions limit(int limit) { this.limit = limit; return this; }
-        public SearchOptions caseSensitive(boolean caseSensitive) { this.caseSensitive = caseSensitive; return this; }
-        public SearchOptions fuzzy(boolean fuzzy) { this.fuzzy = fuzzy; return this; }
-        public SearchOptions includeDirectories(boolean includeDirectories) { this.includeDirectories = includeDirectories; return this; }
-        public SearchOptions includeFiles(boolean includeFiles) { this.includeFiles = includeFiles; return this; }
-        
-        public int limit() { return limit; }
-        public boolean caseSensitive() { return caseSensitive; }
-        public boolean fuzzy() { return fuzzy; }
-        public boolean includeDirectories() { return includeDirectories; }
-        public boolean includeFiles() { return includeFiles; }
-    }
-    
-    /**
-     * Builds search structures from FastFileIndex.
-     * @param indexPath Path to the FastFileIndex file
-     */
-    public static native void build(String indexPath);
-    
-    /**
-     * Performs a prefix search (autocomplete).
-     * @param prefix Path prefix to search for
-     * @param options Search options
-     * @return List of search results
-     */
-    public static native SearchResult[] prefixSearch(String prefix, SearchOptions options);
-    
-    /**
-     * Performs a fuzzy search using n-grams.
-     * @param query Query string
-     * @param options Search options
-     * @return List of search results
-     */
-    public static native SearchResult[] fuzzySearch(String query, SearchOptions options);
-    
-    /**
-     * Performs an exact match search.
-     * @param filename Exact filename to search for
-     * @param options Search options
-     * @return List of search results
-     */
-    public static native SearchResult[] exactSearch(String filename, SearchOptions options);
-    
-    /**
-     * Updates search structures incrementally (for integration with FastFileWatch).
-     * @param path Path that was added/modified/deleted
-     * @param type Change type (0=add, 1=modify, 2=delete)
-     */
-    public static native void update(String path, int type);
-    
-    /**
-     * Releases native resources.
-     */
-    public static native void cleanup();
-    
+public final class SearchEngine {
     static {
         try {
-            System.loadLibrary("fastfilesearch");
+            System.loadLibrary("fastcore");
         } catch (UnsatisfiedLinkError e1) {
             try {
                 String userDir = System.getProperty("user.dir");
-                String dllPath = userDir + "\\build\\fastfilesearch.dll";
+                String dllPath = userDir + "\\build\\fastcore.dll";
                 System.load(dllPath);
             } catch (UnsatisfiedLinkError e2) {
-                System.err.println("Failed to load fastfilesearch.dll: " + e2.getMessage());
+                System.err.println("Failed to load fastcore.dll: " + e2.getMessage());
                 throw e2;
             }
         }
     }
-    
+
+    private final long nativeHandle;
+
+    private SearchEngine(long nativeHandle) {
+        this.nativeHandle = nativeHandle;
+    }
+
+    public long handle() {
+        return nativeHandle;
+    }
+
+    /**
+     * Build search engine from index.
+     */
+    public static native SearchEngine fromIndex(FileIndex index, SearchBuildOptions options);
+
+    /**
+     * Close search engine and free resources.
+     */
+    public native void close();
+
+    /**
+     * Prefix search (autocomplete).
+     */
+    public native SearchResult[] prefix(SearchQuery query, SearchOptions options);
+
+    /**
+     * Fuzzy search using n-grams.
+     */
+    public native SearchResult[] fuzzy(SearchQuery query, SearchOptions options);
+
+    /**
+     * Exact match search.
+     */
+    public native SearchResult[] exact(SearchQuery query, SearchOptions options);
+
+    /**
+     * Apply file update (for live updates).
+     */
+    public native void applyUpdate(FileUpdate update);
+
     public static void main(String[] args) {
-        System.out.println("=== FastFileSearch ===");
-        System.out.println("FastFileSearch - Prefix Trie, N-Gram Index, and Ranking Engine");
+        System.out.println("=== SearchEngine ===");
+        System.out.println("SearchEngine - Prefix Trie, N-Gram Index, and Ranking Engine");
         System.out.println("=== OK ===");
     }
 }
