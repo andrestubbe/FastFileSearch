@@ -1,6 +1,6 @@
-# FastFileSearch
+# FastFileSearch - Blazing-fast file search engine with indexed lookup, pattern matching, and native acceleration [ALPHA].
 
-Blazing-fast file search engine with indexed lookup, pattern matching, and native acceleration [ALPHA].
+
 
 [![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
