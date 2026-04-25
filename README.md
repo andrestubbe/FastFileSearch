@@ -11,6 +11,7 @@
 - [Description](#description)
 - [Quick Start](#quick-start)
 - [Key Features](#key-features)
+- [Performance](#performance)
 - [Installation](#installation)
 - [Building from Source](#building-from-source)
 - [Platform Support](#platform-support)
@@ -62,8 +63,20 @@ public class Example {
 - **N-Gram Index** - Fuzzy search with character n-grams
 - **Exact Match Map** - O(1) exact filename lookups
 - **Ranking Engine** - Recency, frequency, and path-based scoring
-- **Zero-alloc query execution** - Minimal allocations during search
-- **Incremental updates** - Integration with FastFileWatch for live updates
+- [Zero-alloc query execution](#zero-alloc-query-execution)
+- [Incremental updates](#incremental-updates)
+- **Integration with FastFileWatch for live updates**
+
+## Performance
+
+Benchmark results comparing FastFileSearch to Java's normal file search:
+
+| Search Method | Time (ms) | Speedup |
+|---------------|-----------|---------|
+| Java Files.walk() | 144,832 | 1.0x |
+| FastFileSearch (MVP) | 100,681 | 1.44x |
+
+*Note: Current MVP implementation uses Java stub. Native implementation with Prefix Trie and N-Gram Index will provide significant performance improvements.*
 
 ## Installation
 

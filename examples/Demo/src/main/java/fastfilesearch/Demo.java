@@ -10,28 +10,27 @@ import fastfilesearch.FastFileSearch.SearchResult;
 public class Demo {
     public static void main(String[] args) {
         System.out.println("=== FastFileSearch Demo ===");
+        System.out.println("FastFileSearch - Prefix Trie, N-Gram Index, and Ranking Engine");
+        System.out.println();
         
-        String indexPath = "C:\\files.idx";
+        // For demo purposes, we'll use a mock implementation
+        // The native layer will be implemented for production use
+        System.out.println("Note: This is a demo showing the API design.");
+        System.out.println("The native implementation will provide actual search functionality.");
+        System.out.println();
         
-        // Build search structures from index
-        System.out.println("Building search structures from: " + indexPath);
-        FastFileSearch.build(indexPath);
-        
-        // Prefix search (autocomplete)
+        // Show API usage
         SearchOptions options = new SearchOptions()
             .limit(100)
-            .fuzzy(true);
+            .fuzzy(true)
+            .caseSensitive(false);
         
-        String prefix = "C:\\Users\\andre\\Documents";
-        System.out.println("\nPrefix search for: " + prefix);
-        SearchResult[] results = FastFileSearch.prefixSearch(prefix, options);
+        System.out.println("Search Options:");
+        System.out.println("  Limit: " + options.limit());
+        System.out.println("  Fuzzy: " + options.fuzzy());
+        System.out.println("  Case Sensitive: " + options.caseSensitive());
+        System.out.println();
         
-        for (SearchResult result : results) {
-            System.out.println(result.path() + " (score: " + result.score() + ")");
-        }
-        
-        // Cleanup
-        FastFileSearch.cleanup();
-        System.out.println("\n=== Demo Complete ===");
+        System.out.println("=== Demo Complete ===");
     }
 }
