@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.andrestubbe</groupId>
+    <groupId>io.github.andrestubbe</groupId>
     <artifactId>fastfilesearch</artifactId>
-    <version>v1.0.0</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <name>FastFileSearch</name>
@@ -49,15 +49,23 @@
     </repositories>
 
     <dependencies>
+        <!-- FastFileIndex Library -->
         <dependency>
             <groupId>com.github.andrestubbe</groupId>
-            <artifactId>fastfileindex</artifactId>
-            <version>v1.0.0</version>
+            <artifactId>fastFileIndex</artifactId>
+            <version>0.1.0</version>
         </dependency>
+        
+        <!-- FastCore (Required Native Loader) -->
         <dependency>
             <groupId>com.github.andrestubbe</groupId>
             <artifactId>fastcore</artifactId>
-            <version>v1.0.0</version>
+            <version>0.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.andrestubbe</groupId>
+            <artifactId>fastui</artifactId>
+            <version>0.1.0</version>
         </dependency>
     </dependencies>
 

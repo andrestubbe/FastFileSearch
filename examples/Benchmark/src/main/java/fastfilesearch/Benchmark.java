@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Benchmark - Compares FastFileSearch to Java's normal file search.
+ * Benchmark - Compares SearchEngine to Java's normal file search.
  */
 public class Benchmark {
     
     public static void main(String[] args) {
-        System.out.println("=== FastFileSearch Benchmark ===");
-        System.out.println("Comparing FastFileSearch to Java's normal file search");
+        System.out.println("=== SearchEngine Benchmark ===");
+        System.out.println("Comparing SearchEngine to Java's normal file search");
         System.out.println();
         
         String searchPath = "C:\\";
@@ -27,14 +27,17 @@ public class Benchmark {
         long javaTime = benchmarkJavaSearch(searchPath, query);
         System.out.println("Java Search Time: " + javaTime + " ms");
         
-        // Benchmark FastFileSearch (Java implementation for now)
-        long fastSearchTime = benchmarkFastFileSearch(searchPath, query);
-        System.out.println("FastFileSearch Time: " + fastSearchTime + " ms");
+        // Benchmark SearchEngine (Java implementation for now)
+        long fastSearchTime = benchmarkSearchEngine(searchPath, query);
+        System.out.println("SearchEngine Time: " + fastSearchTime + " ms");
         
         System.out.println();
         double speedup = (double) javaTime / fastSearchTime;
         System.out.println("Speedup: " + String.format("%.2f", speedup) + "x");
         
+        System.out.println();
+        System.out.println("Note: SearchEngine currently uses Java stub implementation.");
+        System.out.println("Native implementation with Prefix Trie and N-Gram Index will provide significant performance improvements.");
         System.out.println();
         System.out.println("=== Benchmark Complete ===");
     }
@@ -69,8 +72,8 @@ public class Benchmark {
         return endTime - startTime;
     }
     
-    private static long benchmarkFastFileSearch(String searchPath, String query) {
-        System.out.println("Running FastFileSearch...");
+    private static long benchmarkSearchEngine(String searchPath, String query) {
+        System.out.println("Running SearchEngine (Java stub)...");
         long startTime = System.currentTimeMillis();
         
         // For now, use Java implementation since native layer is stub
@@ -93,7 +96,7 @@ public class Benchmark {
                 }
             });
         } catch (IOException e) {
-            System.err.println("Error during FastFileSearch: " + e.getMessage());
+            System.err.println("Error during SearchEngine: " + e.getMessage());
         }
         
         long endTime = System.currentTimeMillis();
