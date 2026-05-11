@@ -17,13 +17,13 @@ import java.util.Date;
  * FastFileSearch Unified Demo - Integrated Timeline and Mocked Search Engine.
  */
 public class Demo {
+
     private static final Color COLOR_BG = new Color(15, 15, 15);
     private static final Color COLOR_ACCENT = new Color(32, 255, 128);
     private static final Color COLOR_PANEL = new Color(22, 22, 22);
 
     private Timeline timeline;
     private TextField searchField;
-    private Button searchButton;
     private TextArea resultsArea;
     private Image statusLight;
 
@@ -32,9 +32,11 @@ public class Demo {
     private boolean isReady = false;
 
     private fastfileindex.FileIndex index;
+    private FastFileSearch searchEngine;
     private boolean isBuilding = false;
 
     public static void main(String[] args) {
+        System.out.println("Demo starting...");
         new Demo().start();
     }
 
@@ -73,13 +75,13 @@ public class Demo {
         statusLight.setBounds(1370, 65, 20, 20); // Top right, vertically aligned with timeline
 
         searchField = new TextField(50, 12, new Color(25, 25, 25), new Font("Inter", Font.PLAIN, 22), Color.WHITE, COLOR_ACCENT);
-        searchField.setBounds(50, 260, 1000, 50);
-        searchField.setText(".java");
+        searchField.setBounds(50, 260, 1340, 50); // Widened to full width
+        searchField.setText("*.java");
 
-        searchButton = new Button(50, 12, COLOR_ACCENT, "SEARCH", new Font("Inter", Font.BOLD, 18), Color.BLACK);
-        searchButton.setBounds(1060, 260, 330, 50);
-
-        resultsArea = new TextArea(20, new Color(20, 20, 20), new Font("Consolas", Font.PLAIN, 22), new Color(200, 200, 200));
+        final int arc = 20;
+        final Font font = new Font("Consolas", Font.PLAIN, 32);
+        final Color color1;
+        resultsArea = new TextArea(arc, new Color(20, 20, 20), font, new Color(200, 200, 200));
         resultsArea.setBounds(50, 330, 1340, 650);
         resultsArea.setText("FastFileSearch v0.1.0 starting...\nInitializing Native Index Engine...");
 
@@ -87,17 +89,17 @@ public class Demo {
         final Container container = new Container();
         container.setBackground(COLOR_BG);
         container.add(timeline);
-        container.add(statusLight);
+//        container.add(statusLight);
         container.add(searchField);
-        container.add(searchButton);
         container.add(resultsArea);
 
         // 3. Logic Wiring
-        searchButton.addBehavior(new fastui.behaviour.MouseBehavior() {
-            @Override
-            public void onMousePressed(fastui.component.Component target, int mx, int my) {
-                performSearch();
-            }
+        timeline.getRangeBehavior().addListener((min, max) -> {
+            performSearch();
+        });
+
+        searchField.addChangeListener(text -> {
+            performSearch();
         });
 
         // 4. Window Setup
@@ -115,6 +117,34 @@ public class Demo {
             FastTheme.setTitleBarColor(hwnd, 15, 15, 15);
             FastTheme.setTitleBarTextColor(hwnd, 220, 220, 220);
         }
+
+        // --- RESPONSIVE LAYOUT LOGIC ---
+        frame.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                int w = container.getWidth();
+                int h = container.getHeight();
+                int padding = 50;
+                int innerW = w - (padding * 2);
+
+                // 1. Timeline (Fixed height, dynamic width)
+                timeline.setBounds(padding, 50, innerW - 40, 50, 90, 15);
+                
+                // 2. Status Light (Moves with top-right corner)
+                statusLight.setBounds(w - padding - 20, 65, 20, 20);
+
+                // 3. Search Field (Fixed Y and height, dynamic width)
+                searchField.setBounds(padding, 260, innerW, 50);
+
+                // 4. Results Area (Fills the rest of the height)
+                int resultsY = 330;
+                int resultsH = h - resultsY - padding;
+                if (resultsH < 100) resultsH = 100; // Minimum height
+                resultsArea.setBounds(padding, resultsY, innerW, resultsH);
+                
+                container.repaint();
+            }
+        });
 
         frame.setVisible(true);
 
@@ -136,6 +166,10 @@ public class Demo {
 
                 String targetPath = "C:\\Users\\andre\\Documents\\2026-04-28-Work-FastJava";
                 fastfileindex.FastFileIndex.build(new String[]{targetPath});
+                fastfileindex.FastFileIndex.save("files.idx");
+                
+                index = fastfileindex.FileIndex.open("files.idx");
+                searchEngine = FastFileSearch.fromIndex(index, SearchBuildOptions.defaults());
                 
                 isBuilding = false;
                 SwingUtilities.invokeLater(() -> resultsArea.append("\n[+] Native FileIndex built! " + fastfileindex.FastFileIndex.getEntryCount() + " items indexed."));
@@ -143,7 +177,8 @@ public class Demo {
                 isReady = true;
                 SwingUtilities.invokeLater(() -> {
                     statusLight.setImage(lightGreen);
-                    resultsArea.append("\n[+] Native Index is READY! Enter a query and hit SEARCH.\n");
+                    resultsArea.append("\n[+] Native Index is READY! Type to filter or drag the timeline.\n");
+                    performSearch();
                 });
             } catch (Throwable e) {
                 isBuilding = false;
@@ -153,53 +188,51 @@ public class Demo {
     }
 
     private void performSearch() {
-        if (!isReady) {
-            resultsArea.append("\n[!] Wait for Index to finish building...\n");
-            return;
+        if (!isReady) return;
+        
+        String rawQuery = searchField.getText().toLowerCase().trim();
+        String queryStr = rawQuery.replace("*", "");
+        
+        if (rawQuery.equals("*.*") || rawQuery.isEmpty()) {
+            queryStr = ""; // Empty string will match everything via .contains("")
         }
-        
-        String queryStr = searchField.getText().toLowerCase().replace("*", "");
-        long minTime = (long) timeline.getRangeBehavior().getMinValue();
-        long maxTime = (long) timeline.getRangeBehavior().getMaxValue();
 
-        resultsArea.setText("Query: '" + queryStr + "'\n");
-        resultsArea.append("Time Filter: " + new Date(minTime) + " to " + new Date(maxTime) + "\n\n");
-        
-        long startSearch = System.nanoTime();
+
+        StringBuilder sb = new StringBuilder();
+
         int matchCount = 0;
         
         try {
             long totalFiles = fastfileindex.FastFileIndex.getEntryCount();
             if (totalFiles == 0) {
-                resultsArea.append("Index is empty!\n");
+                resultsArea.setText("Index is empty!\n");
                 return;
             }
             
             for (long i = 0; i < totalFiles; i++) {
-                // Get timestamp first to avoid unnecessary JNI String allocations
-                long fileTime = fastfileindex.FastFileIndex.getEntryModified(i) * 1000L; 
-                
+                long fileTime = fastfileindex.FastFileIndex.getEntryModified(i) * 1000L;
+
+                long minTime = timeline.getMinTime();
+                long maxTime = timeline.getMaxTime();
                 if (fileTime >= minTime && fileTime <= maxTime) {
                     String path = fastfileindex.FastFileIndex.getEntryPath(i);
-                    if (path != null && path.toLowerCase().contains(queryStr)) {
-                        if (matchCount < 50) { // Limit results to prevent UI lag
-                            resultsArea.append(String.format("- [Score: 0.99] %s\n  (Modified: %s)\n\n", path, new Date(fileTime)));
+                    if (path != null && (queryStr.isEmpty() || path.toLowerCase().contains(queryStr))) {
+                        if (matchCount < 50) {
+                            String name = path;
+                            int lastSlash = path.lastIndexOf('\\');
+                            if (lastSlash >= 0) {
+                                name = path.substring(lastSlash + 1);
+                            }
+                            sb.append(String.format("%s\n", name));
                         }
                         matchCount++;
                     }
                 }
             }
         } catch (Exception e) {
-            resultsArea.append("Error querying native index: " + e.getMessage() + "\n");
+            sb.append("Error querying native index: ").append(e.getMessage()).append("\n");
         }
         
-        long endSearch = System.nanoTime();
-        resultsArea.append(String.format("Native Index Search took: %.2f ms\n", (endSearch - startSearch) / 1000000.0));
-        
-        if (matchCount > 50) {
-            resultsArea.append("Found " + matchCount + " results within the timeline range (showing top 50).\n");
-        } else {
-            resultsArea.append("Found " + matchCount + " results within the selected timeline range.\n");
-        }
+        resultsArea.setText(sb.toString());
     }
 }

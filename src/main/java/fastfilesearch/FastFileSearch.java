@@ -27,25 +27,19 @@ import fastfileindex.FileIndex;
  * @since 1.0.0
  * @version 1.0.0
  */
-public final class SearchEngine {
+public final class FastFileSearch {
     static {
         try {
-            System.loadLibrary("fastcore");
-        } catch (UnsatisfiedLinkError e1) {
-            try {
-                String userDir = System.getProperty("user.dir");
-                String dllPath = userDir + "\\build\\fastcore.dll";
-                System.load(dllPath);
-            } catch (UnsatisfiedLinkError e2) {
-                System.err.println("Failed to load fastcore.dll: " + e2.getMessage());
-                throw e2;
-            }
+            fastcore.FastCore.loadLibrary("fastfilesearch");
+        } catch (Throwable e) {
+            System.err.println("CRITICAL: FastCore failed to load native DLL: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     private final long nativeHandle;
 
-    private SearchEngine(long nativeHandle) {
+    private FastFileSearch(long nativeHandle) {
         this.nativeHandle = nativeHandle;
     }
 
@@ -56,7 +50,11 @@ public final class SearchEngine {
     /**
      * Build search engine from index.
      */
-    public static native SearchEngine fromIndex(FileIndex index, SearchBuildOptions options);
+    public static FastFileSearch fromIndex(FileIndex index, SearchBuildOptions options) {
+        return fromIndexNative(index.handle(), options);
+    }
+
+    private static native FastFileSearch fromIndexNative(long indexHandle, SearchBuildOptions options);
 
     /**
      * Close search engine and free resources.
@@ -84,8 +82,8 @@ public final class SearchEngine {
     public native void applyUpdate(FileUpdate update);
 
     public static void main(String[] args) {
-        System.out.println("=== SearchEngine ===");
-        System.out.println("SearchEngine - Prefix Trie, N-Gram Index, and Ranking Engine");
+        System.out.println("=== FastFileSearch ===");
+        System.out.println("FastFileSearch - Prefix Trie, N-Gram Index, and Ranking Engine");
         System.out.println("=== OK ===");
     }
 }

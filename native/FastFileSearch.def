@@ -1,0 +1,8 @@
+LIBRARY fastfilesearch
+EXPORTS
+    Java_fastfilesearch_FastFileSearch_fromIndexNative
+    Java_fastfilesearch_FastFileSearch_prefix
+    Java_fastfilesearch_FastFileSearch_fuzzy
+    Java_fastfilesearch_FastFileSearch_exact
+    Java_fastfilesearch_FastFileSearch_update
+    Java_fastfilesearch_FastFileSearch_cleanup
