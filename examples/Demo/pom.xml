@@ -46,7 +46,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.andrestubbe</groupId>
-            <artifactId>fastfilesearch-core</artifactId>
+            <artifactId>fastfilesearch</artifactId>
             <version>0.1.0</version>
         </dependency>
         <dependency>
@@ -67,7 +67,7 @@
         <dependency>
             <groupId>com.github.andrestubbe</groupId>
             <artifactId>fasttheme</artifactId>
-            <version>0.3.0</version>
+            <version>0.1.0</version>
         </dependency>
     </dependencies>
 
