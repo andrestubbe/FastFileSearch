@@ -1,4 +1,4 @@
-# FastFileSearch — High-Performance Native File Search for Java [v0.1.0]
+﻿# FastFileSearch â€” High-Performance Native File Search for Java [v0.1.0]
 
 **Lightning fast fuzzy and prefix search for millions of indexed files.**
 
@@ -11,7 +11,7 @@
 FastFileSearch provides **real-time search capabilities** for the FastJava ecosystem. Built on top of FastFileIndex, it allows for instant prefix, fuzzy, and exact matching across massive file collections with sub-millisecond response times.
 
 ```java
-// Quick Start — Performing a search
+// Quick Start â€” Performing a search
 import fastfilesearch.FastFileSearch;
 import fastfilesearch.SearchResult;
 
@@ -43,9 +43,9 @@ public class SearchDemo {
 
 ## Key Features
 
-- **🚀 Native Performance** — Direct C++ search kernels for maximum speed.
-- **⚡ Fuzzy Matching** — Intelligent error-tolerant search algorithms.
-- **📦 Zero Overhead** — Highly optimized memory layout for search structures.
+- **ðŸš€ Native Performance** â€” Direct C++ search kernels for maximum speed.
+- **âš¡ Fuzzy Matching** â€” Intelligent error-tolerant search algorithms.
+- **ðŸ“¦ Zero Overhead** â€” Highly optimized memory layout for search structures.
 
 ---
 
@@ -64,7 +64,7 @@ FastFileSearch is designed for live "search-as-you-type" interfaces.
 ### Option 1: Maven (Recommended)
 Add the JitPack repository and the dependencies to your `pom.xml`:
 
-`xml
+```xml
 <repositories>
     <repository>
         <id>jitpack.io</id>
@@ -79,6 +79,7 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
         <artifactId>fastfilesearch</artifactId>
         <version>v0.1.0</version>
     </dependency>
+
     <!-- FastCore (Required Native Loader) -->
     <dependency>
         <groupId>com.github.andrestubbe</groupId>
@@ -86,19 +87,19 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
         <version>v0.1.0</version>
     </dependency>
 </dependencies>
-`
+```
 
 ### Option 2: Gradle (via JitPack)
-`groovy
+```groovy
 repositories {
     maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    implementation 'com.github.andrestubbe:.1.0'
+    implementation 'com.github.andrestubbe:fastfilesearch:v0.1.0'
     implementation 'com.github.andrestubbe:fastcore:v0.1.0'
 }
-`
+```
 
 ### Option 3: Direct Download (No Build Tool)
 Download the latest JARs directly to add them to your classpath:
@@ -131,7 +132,7 @@ Download the latest JARs directly to add them to your classpath:
 
 | Platform | Status |
 |----------|--------|
-| Windows 10/11 (x64) | ✅ Fully Supported |
+| Windows 10/11 (x64) | âœ… Fully Supported |
 
 ---
 
@@ -142,17 +143,17 @@ See [COMPILE.md](COMPILE.md) for detailed instructions on building the native se
 ---
 
 ## License
-MIT License — See [LICENSE](LICENSE) file for details.
+MIT License â€” See [LICENSE](LICENSE) file for details.
 
 ---
 
 ## Related Projects
-- [FastFileIndex](https://github.com/andrestubbe/FastFileIndex) — The underlying indexing engine
-- [FastThumb](https://github.com/andrestubbe/FastThumb) — Native Shell Image Engine
-- [FastCore](https://github.com/andrestubbe/FastCore) — Native Library Loader
+- [FastFileIndex](https://github.com/andrestubbe/FastFileIndex) â€” The underlying indexing engine
+- [FastThumb](https://github.com/andrestubbe/FastThumb) â€” Native Shell Image Engine
+- [FastCore](https://github.com/andrestubbe/FastCore) â€” Native Library Loader
 
 ---
-**Made with ⚡ by Andre Stubbe**
+**Made with âš¡ by Andre Stubbe**
 
 <!-- 
 SEO Keywords: java, jni, fuzzy search, file search, performance, windows
