@@ -1,4 +1,4 @@
-﻿# FastFileSearch â€” High-Performance Native File Search for Java [v0.1.0]
+﻿# FastFileSearch — High-Performance Native File Search for Java [v0.1.0]
 
 **Lightning fast fuzzy and prefix search for millions of indexed files.**
 
@@ -11,7 +11,7 @@
 FastFileSearch provides **real-time search capabilities** for the FastJava ecosystem. Built on top of FastFileIndex, it allows for instant prefix, fuzzy, and exact matching across massive file collections with sub-millisecond response times.
 
 ```java
-// Quick Start â€” Performing a search
+// Quick Start — Performing a search
 import fastfilesearch.FastFileSearch;
 import fastfilesearch.SearchResult;
 
@@ -43,9 +43,9 @@ public class SearchDemo {
 
 ## Key Features
 
-- **ðŸš€ Native Performance** â€” Direct C++ search kernels for maximum speed.
-- **âš¡ Fuzzy Matching** â€” Intelligent error-tolerant search algorithms.
-- **ðŸ“¦ Zero Overhead** â€” Highly optimized memory layout for search structures.
+- **🚀 Native Performance** — Direct C++ search kernels for maximum speed.
+- **⚡ Fuzzy Matching** — Intelligent error-tolerant search algorithms.
+- **📦 Zero Overhead** — Highly optimized memory layout for search structures.
 
 ---
 
@@ -132,7 +132,7 @@ Download the latest JARs directly to add them to your classpath:
 
 | Platform | Status |
 |----------|--------|
-| Windows 10/11 (x64) | âœ… Fully Supported |
+| Windows 10/11 (x64) | ✅ Fully Supported |
 
 ---
 
@@ -143,17 +143,17 @@ See [COMPILE.md](COMPILE.md) for detailed instructions on building the native se
 ---
 
 ## License
-MIT License â€” See [LICENSE](LICENSE) file for details.
+MIT License — See [LICENSE](LICENSE) file for details.
 
 ---
 
 ## Related Projects
-- [FastFileIndex](https://github.com/andrestubbe/FastFileIndex) â€” The underlying indexing engine
-- [FastThumb](https://github.com/andrestubbe/FastThumb) â€” Native Shell Image Engine
-- [FastCore](https://github.com/andrestubbe/FastCore) â€” Native Library Loader
+- [FastFileIndex](https://github.com/andrestubbe/FastFileIndex) — The underlying indexing engine
+- [FastThumb](https://github.com/andrestubbe/FastThumb) — Native Shell Image Engine
+- [FastCore](https://github.com/andrestubbe/FastCore) — Native Library Loader
 
 ---
-**Made with âš¡ by Andre Stubbe**
+**Made with ⚡ by Andre Stubbe**
 
 <!-- 
 SEO Keywords: java, jni, fuzzy search, file search, performance, windows
