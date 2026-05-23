@@ -61,8 +61,10 @@ FastFileSearch is designed for live "search-as-you-type" interfaces.
 
 ## Installation
 
-### Maven (JitPack)
-```xml
+### Option 1: Maven (Recommended)
+Add the JitPack repository and the dependencies to your `pom.xml`:
+
+`xml
 <repositories>
     <repository>
         <id>jitpack.io</id>
@@ -71,32 +73,42 @@ FastFileSearch is designed for live "search-as-you-type" interfaces.
 </repositories>
 
 <dependencies>
+    <!-- FastFileSearch Library -->
     <dependency>
         <groupId>com.github.andrestubbe</groupId>
         <artifactId>fastfilesearch</artifactId>
-        <version>0.1.0</version>
+        <version>v0.1.0</version>
     </dependency>
+    <!-- FastCore (Required Native Loader) -->
     <dependency>
         <groupId>com.github.andrestubbe</groupId>
         <artifactId>fastcore</artifactId>
-        <version>0.1.0</version>
+        <version>v0.1.0</version>
     </dependency>
 </dependencies>
-```
+`
 
-### Gradle (JitPack)
-```groovy
+### Option 2: Gradle (via JitPack)
+`groovy
 repositories {
     maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    implementation 'com.github.andrestubbe:fastfilesearch:0.1.0'
-    implementation 'com.github.andrestubbe:fastcore:0.1.0'
+    implementation 'com.github.andrestubbe:.1.0'
+    implementation 'com.github.andrestubbe:fastcore:v0.1.0'
 }
-```
+`
 
----
+### Option 3: Direct Download (No Build Tool)
+Download the latest JARs directly to add them to your classpath:
+
+1. 📦 **[fastfilesearch-v0.1.0.jar](https://github.com/andrestubbe/FastFileSearch/releases/download/v0.1.0/fastfilesearch-v0.1.0.jar)** (The Core Library)
+2. ⚙️ **[fastcore-v0.1.0.jar](https://github.com/andrestubbe/FastCore/releases/download/v0.1.0/fastcore-v0.1.0.jar)** (The Mandatory Native Loader)
+
+> [!IMPORTANT]
+> All JARs must be in your classpath for the native JNI calls to function correctly.
+
 
 ## Try the Demo
 
