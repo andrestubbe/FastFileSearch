@@ -2,12 +2,6 @@
 
 **Lightning fast fuzzy and prefix search for millions of indexed files.**
 
-[![Build](https://img.shields.io/github/actions/workflow/status/andrestubbe/FastFileSearch/maven.yml?branch=main)](https://github.com/andrestubbe/FastFileSearch/actions)
-[![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
-[![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![JitPack](https://jitpack.io/v/andrestubbe/FastFileSearch.svg)](https://jitpack.io/#andrestubbe/FastFileSearch)
-
 FastFileSearch provides **real-time search capabilities** for the FastJava ecosystem. Built on top of FastFileIndex, it allows for instant prefix, fuzzy, and exact matching across massive file collections with sub-millisecond response times.
 
 ```java
@@ -25,6 +19,12 @@ public class SearchDemo {
     }
 }
 ```
+
+[![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastFileSearch/releases/tag/v0.1.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
+[![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
+[![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
 
 ---
 
