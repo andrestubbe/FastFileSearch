@@ -6,16 +6,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.andrestubbe</groupId>
-    <artifactId>fastfilesearch-demo</artifactId>
-    <version>1.0.0</version>
+            <artifactId>fastfilesearch-demo</artifactId>
+            <version>0.1.0</version>
     <packaging>jar</packaging>
 
-    <parent>
-        <groupId>com.github.andrestubbe</groupId>
-        <artifactId>fastfilesearch</artifactId>
-        <version>0.1.0</version>
-        <relativePath>../../pom.xml</relativePath>
-    </parent>
+    
 
     <name>FastFileSearch Demo</name>
     <description>Demo application for FastFileSearch</description>
@@ -59,7 +54,7 @@
                     <artifactId>fasttheme</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>io.github.andrestubbe</groupId>
+                    <groupId>com.github.andrestubbe</groupId>
                     <artifactId>fasttheme</artifactId>
                 </exclusion>
             </exclusions>
@@ -97,3 +92,5 @@
         </plugins>
     </build>
 </project>
+
+

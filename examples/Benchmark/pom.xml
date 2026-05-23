@@ -6,8 +6,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.andrestubbe</groupId>
-    <artifactId>fastfilesearch-benchmark</artifactId>
-    <version>0.1.0</version>
+            <artifactId>fastfilesearch-benchmark</artifactId>
+            <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <name>FastFileSearch Benchmark</name>
@@ -62,3 +62,5 @@
         </plugins>
     </build>
 </project>
+
+
