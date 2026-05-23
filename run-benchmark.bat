@@ -1,16 +1,26 @@
 @echo off
-echo === FastFileSearch Benchmark ===
+setlocal
+cd /d "%~dp0"
+
+echo ===========================================
+echo FastFileSearch Benchmark
+echo ===========================================
 echo.
-echo Building FastFileSearch...
-call mvn clean package -f pom.xml
+
+echo [+] Building FastFileSearch...
+call mvn clean install -DskipTests -q
 echo.
-echo Building Benchmark...
+
+echo [+] Building Benchmark...
 cd examples\Benchmark
-call mvn clean package -f pom.xml
+call mvn clean compile -q
 echo.
-echo Running Benchmark...
-java --enable-native-access=ALL-UNNAMED -cp "target\fastfilesearch-benchmark-v1.0.0.jar;..\..\target\fastfilesearch-v1.0.0.jar" fastfilesearch.Benchmark
+
+echo [+] Running Benchmark...
+call mvn exec:java -Dexec.mainClass="fastfilesearch.Benchmark" -Djava.library.path="..\..\build;..\..\..\FastFileIndex\build;..\..\..\FastTheme\src\main\resources\native"
+
 cd ..\..
 echo.
 echo === Benchmark Complete ===
 pause
+endlocal

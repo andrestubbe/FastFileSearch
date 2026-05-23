@@ -64,12 +64,12 @@ public class Demo {
         final long oneYearAgo = now - 365L * 24 * 60 * 60 * 1000;
 
         timeline = new Timeline(
+            50f, 50f, 1310f, 50f, 90f, 15f,
             oneYearAgo, now,
-            200, 20, COLOR_PANEL,
-            90, new Color(35, 35, 35), new Color(32, 255, 128, 160),
+            20, COLOR_PANEL,
+            new Color(35, 35, 35), new Color(32, 255, 128, 160),
             new Font("Inter", Font.PLAIN, 22), new Color(60, 60, 60), new Color(140, 140, 140)
         );
-        timeline.setBounds(50, 50, 1310, 50, 90, 15);
 
         statusLight = new Image(lightRed);
         statusLight.setBounds(1370, 65, 20, 20); // Top right, vertically aligned with timeline
@@ -80,9 +80,7 @@ public class Demo {
 
         final int arc = 20;
         final Font font = new Font("Consolas", Font.PLAIN, 32);
-        final Color color1;
-        resultsArea = new TextArea(arc, new Color(20, 20, 20), font, new Color(200, 200, 200));
-        resultsArea.setBounds(50, 330, 1340, 650);
+        resultsArea = new TextArea(50, 330, 1340, 650, arc, new Color(20, 20, 20), font, new Color(200, 200, 200));
         resultsArea.setText("FastFileSearch v0.1.0 starting...\nInitializing Native Index Engine...");
 
         // 2. Assembly
@@ -164,7 +162,7 @@ public class Demo {
                     }
                 }).start();
 
-                String targetPath = "C:\\Users\\andre\\Documents\\2026-04-28-Work-FastJava";
+                String targetPath = "C:\\Users\\andre\\Documents\\2026-05-17-Work-FastJava";
                 fastfileindex.FastFileIndex.build(new String[]{targetPath});
                 fastfileindex.FastFileIndex.save("files.idx");
                 
@@ -212,8 +210,8 @@ public class Demo {
             for (long i = 0; i < totalFiles; i++) {
                 long fileTime = fastfileindex.FastFileIndex.getEntryModified(i) * 1000L;
 
-                long minTime = timeline.getMinTime();
-                long maxTime = timeline.getMaxTime();
+                long minTime = timeline.getViewport().getSelectionStartTime();
+                long maxTime = timeline.getViewport().getSelectionEndTime();
                 if (fileTime >= minTime && fileTime <= maxTime) {
                     String path = fastfileindex.FastFileIndex.getEntryPath(i);
                     if (path != null && (queryStr.isEmpty() || path.toLowerCase().contains(queryStr))) {

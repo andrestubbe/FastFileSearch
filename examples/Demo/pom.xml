@@ -10,6 +10,13 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
+    <parent>
+        <groupId>com.github.andrestubbe</groupId>
+        <artifactId>fastfilesearch</artifactId>
+        <version>0.1.0</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
     <name>FastFileSearch Demo</name>
     <description>Demo application for FastFileSearch</description>
 
@@ -39,13 +46,23 @@
         </dependency>
         <dependency>
             <groupId>com.github.andrestubbe</groupId>
-            <artifactId>fastfilesearch</artifactId>
+            <artifactId>fastfilesearch-core</artifactId>
             <version>0.1.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.andrestubbe</groupId>
             <artifactId>fastui</artifactId>
             <version>0.1.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.github.andrestubbe</groupId>
+                    <artifactId>fasttheme</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.github.andrestubbe</groupId>
+                    <artifactId>fasttheme</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.andrestubbe</groupId>
@@ -72,6 +89,9 @@
                 <version>3.1.0</version>
                 <configuration>
                     <mainClass>fastfilesearch.Demo</mainClass>
+                    <arguments>
+                        <argument>-Djava.library.path=../../build;../../../FastFileIndex/build;../../../FastTheme/src/main/resources/native</argument>
+                    </arguments>
                 </configuration>
             </plugin>
         </plugins>
