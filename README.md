@@ -6,7 +6,7 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
 [![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
 
-**Lightning fast fuzzy and prefix search for millions of indexed files.**
+**⚡ Lightning fast fuzzy and prefix search for millions of indexed files.**
 
 FastFileSearch provides **real-time search capabilities** for the FastJava ecosystem. Built on top of FastFileIndex, it
 allows for instant prefix, fuzzy, and exact matching across massive file collections with sub-millisecond response
@@ -162,13 +162,11 @@ MIT License — See [LICENSE](LICENSE) file for details.
 
 ## Related Projects
 
-- [FastFileIndex](https://github.com/andrestubbe/FastFileIndex) — The underlying indexing engine
-- [FastThumb](https://github.com/andrestubbe/FastThumb) — Native Shell Image Engine
-- [FastCore](https://github.com/andrestubbe/FastCore) — Native Library Loader
+- [FastFileIndex](https://github.com/andrestubbe/FastFileIndex) - Binary file indexing with mmap support
+- [FastFileSearch](https://github.com/andrestubbe/FastFileSearch) - Prefix Trie, N-Gram index, and Ranking engine
+- [FastFileWatch](https://github.com/andrestubbe/FastFileWatch) - USN Journal-based live file monitoring
+- [FastCore](https://github.com/andrestubbe/FastCore) - Unified JNI loader and platform abstraction
 
 ---
-**Made with ⚡ by Andre Stubbe**
 
-<!-- 
-SEO Keywords: java, jni, fuzzy search, file search, performance, windows
--->
+**Part of the FastJava Ecosystem** — *Making the JVM faster. Small package. Maximum speed. Zero bloat. 🚀📋*
