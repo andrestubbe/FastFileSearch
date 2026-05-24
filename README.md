@@ -1,24 +1,4 @@
-﻿# FastFileSearch — High-Performance Native File Search for Java [v0.1.0]
-
-**Lightning fast fuzzy and prefix search for millions of indexed files.**
-
-FastFileSearch provides **real-time search capabilities** for the FastJava ecosystem. Built on top of FastFileIndex, it allows for instant prefix, fuzzy, and exact matching across massive file collections with sub-millisecond response times.
-
-```java
-// Quick Start — Performing a search
-import fastfilesearch.FastFileSearch;
-import fastfilesearch.SearchResult;
-
-public class SearchDemo {
-    public static void main(String[] args) {
-        FastFileSearch engine = FastFileSearch.fromIndex(myIndex, options);
-        
-        // Instant fuzzy search
-        SearchResult[] results = engine.fuzzy("myapp", 100);
-        System.out.println("Found " + results.length + " matches!");
-    }
-}
-```
+﻿# FastFileSearch v0.1.0 [ALPHA] — High-Performance Native File Search for Java
 
 [![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastFileSearch/releases/tag/v0.1.0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -26,9 +6,35 @@ public class SearchDemo {
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
 [![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
 
+**Lightning fast fuzzy and prefix search for millions of indexed files.**
+
+FastFileSearch provides **real-time search capabilities** for the FastJava ecosystem. Built on top of FastFileIndex, it
+allows for instant prefix, fuzzy, and exact matching across massive file collections with sub-millisecond response
+times.
+
+[![FastKeyboard Showcase](docs/screenshot.png)](https://www.youtube.com/watch?v=BZsqQl7WqWk)
+
+```java
+// Quick Start — Performing a search
+
+import fastfilesearch.FastFileSearch;
+import fastfilesearch.SearchResult;
+
+public class SearchDemo {
+    public static void main(String[] args) {
+        FastFileSearch engine = FastFileSearch.fromIndex(myIndex, options);
+
+        // Instant fuzzy search
+        SearchResult[] results = engine.fuzzy("myapp", 100);
+        System.out.println("Found " + results.length + " matches!");
+    }
+}
+```
+
 ---
 
 ## Table of Contents
+
 - [Key Features](#key-features)
 - [Performance](#performance)
 - [Installation](#installation)
@@ -53,18 +59,20 @@ public class SearchDemo {
 
 FastFileSearch is designed for live "search-as-you-type" interfaces.
 
-| Operation | FastFileSearch | Standard Search | Speedup |
-|-----------|---------|---------------|---------|
-| Fuzzy Match (1M) | 1.2 ms | 45 ms | **37x** |
+| Operation        | FastFileSearch | Standard Search | Speedup |
+|------------------|----------------|-----------------|---------|
+| Fuzzy Match (1M) | 1.2 ms         | 45 ms           | **37x** |
 
 ---
 
 ## Installation
 
 ### Option 1: Maven (Recommended)
+
 Add the JitPack repository and the dependencies to your `pom.xml`:
 
 ```xml
+
 <repositories>
     <repository>
         <id>jitpack.io</id>
@@ -73,23 +81,24 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
 </repositories>
 
 <dependencies>
-    <!-- FastFileSearch Library -->
-    <dependency>
-        <groupId>com.github.andrestubbe</groupId>
-        <artifactId>fastfilesearch</artifactId>
-        <version>v0.1.0</version>
-    </dependency>
+<!-- FastFileSearch Library -->
+<dependency>
+    <groupId>com.github.andrestubbe</groupId>
+    <artifactId>fastfilesearch</artifactId>
+    <version>v0.1.0</version>
+</dependency>
 
-    <!-- FastCore (Required Native Loader) -->
-    <dependency>
-        <groupId>com.github.andrestubbe</groupId>
-        <artifactId>fastcore</artifactId>
-        <version>v0.1.0</version>
-    </dependency>
+<!-- FastCore (Required Native Loader) -->
+<dependency>
+    <groupId>com.github.andrestubbe</groupId>
+    <artifactId>fastcore</artifactId>
+    <version>v0.1.0</version>
+</dependency>
 </dependencies>
 ```
 
 ### Option 2: Gradle (via JitPack)
+
 ```groovy
 repositories {
     maven { url 'https://jitpack.io' }
@@ -102,14 +111,17 @@ dependencies {
 ```
 
 ### Option 3: Direct Download (No Build Tool)
+
 Download the latest JARs directly to add them to your classpath:
 
-1. 📦 **[fastfilesearch-v0.1.0.jar](https://github.com/andrestubbe/FastFileSearch/releases/download/v0.1.0/fastfilesearch-v0.1.0.jar)** (The Core Library)
-2. ⚙️ **[fastcore-v0.1.0.jar](https://github.com/andrestubbe/FastCore/releases/download/v0.1.0/fastcore-v0.1.0.jar)** (The Mandatory Native Loader)
+1. 📦 *
+   *[fastfilesearch-v0.1.0.jar](https://github.com/andrestubbe/FastFileSearch/releases/download/v0.1.0/fastfilesearch-v0.1.0.jar)
+   ** (The Core Library)
+2. ⚙️ **[fastcore-v0.1.0.jar](https://github.com/andrestubbe/FastCore/releases/download/v0.1.0/fastcore-v0.1.0.jar)** (
+   The Mandatory Native Loader)
 
 > [!IMPORTANT]
 > All JARs must be in your classpath for the native JNI calls to function correctly.
-
 
 ## Try the Demo
 
@@ -121,17 +133,17 @@ Download the latest JARs directly to add them to your classpath:
 
 ## API Reference
 
-| Method | Description |
-|--------|-------------|
-| `SearchResult[] fuzzy(String query, int limit)` | Executes a fuzzy search match. |
+| Method                                           | Description                    |
+|--------------------------------------------------|--------------------------------|
+| `SearchResult[] fuzzy(String query, int limit)`  | Executes a fuzzy search match. |
 | `SearchResult[] prefix(String query, int limit)` | Executes a fast prefix search. |
 
 ---
 
 ## Platform Support
 
-| Platform | Status |
-|----------|--------|
+| Platform            | Status            |
+|---------------------|-------------------|
 | Windows 10/11 (x64) | ✅ Fully Supported |
 
 ---
@@ -143,11 +155,13 @@ See [COMPILE.md](COMPILE.md) for detailed instructions on building the native se
 ---
 
 ## License
+
 MIT License — See [LICENSE](LICENSE) file for details.
 
 ---
 
 ## Related Projects
+
 - [FastFileIndex](https://github.com/andrestubbe/FastFileIndex) — The underlying indexing engine
 - [FastThumb](https://github.com/andrestubbe/FastThumb) — Native Shell Image Engine
 - [FastCore](https://github.com/andrestubbe/FastCore) — Native Library Loader
