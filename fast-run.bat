@@ -1,13 +1,9 @@
 @echo off
-setlocal
-echo [+] Fast Launching Demo 2 (Skipping Ecosystem Sync)...
-
-:: 1. Compile only the demo (fast)
+echo ⚡ Building Main Project...
+call mvn clean package -DskipTests
+if %ERRORLEVEL% NEQ 0 ( pause & exit /b )
+echo 🚀 Running Hero Demo...
 cd examples\Demo
-call mvn compile -q
-
-:: 2. Run with pre-defined library paths
-mvn exec:java -Dexec.mainClass="fastfilesearch.Demo2" -Djava.library.path="..\..\fastfilesearch-core\build;..\..\..\FastFileIndex\build;..\..\..\FastTheme\src\main\resources\native"
-
+call mvn compile exec:java -Dexec.mainClass=fastfilesearch.Demo
 cd ..\..
-endlocal
+pause
