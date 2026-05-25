@@ -6,11 +6,15 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
 [![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
 
+---
+
 **⚡ Lightning fast fuzzy and prefix search for millions of indexed files.**
 
 FastFileSearch provides **real-time search capabilities** for the FastJava ecosystem. Built on top of FastFileIndex, it
 allows for instant prefix, fuzzy, and exact matching across massive file collections with sub-millisecond response
 times.
+
+---
 
 [![FastKeyboard Showcase](docs/screenshot.png)](https://www.youtube.com/watch?v=BZsqQl7WqWk)
 
