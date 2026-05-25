@@ -140,17 +140,22 @@ Download the latest JARs directly to add them to your classpath:
 
 ---
 
-## Platform Support
+## Documentation
 
-| Platform            | Status            |
-|---------------------|-------------------|
-| Windows 10/11 (x64) | ✅ Fully Supported |
+* **[COMPILE.md](COMPILE.md)**: Full compilation guide (MSVC C++17 build chain + JNI Setup).
+* **[REFERENCE.md](REFERENCE.md)**: Full API descriptions, border configurations, and codepoint index.
+* **[PHILOSOPHIE.md](PHILOSOPHIE.md)**: The engineering rationale for zero-allocation performance.
+* **[ROADMAP.md](ROADMAP.md)**: Future milestones and planned features.
 
 ---
 
-## Building from Source
+## Platform Support
 
-See [COMPILE.md](COMPILE.md) for detailed instructions on building the native search DLL.
+| Platform      | Status            |
+|---------------|-------------------|
+| Windows 10/11 | ✅ Fully Supported |
+| Linux         | 🚧 Planned        |
+| macOS         | 🚧 Planned        |
 
 ---
 
