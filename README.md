@@ -1,4 +1,4 @@
-﻿# FastFileSearch v0.1.0 [ALPHA] — High-Performance Native File Search for Java
+# FastFileSearch v0.1.0 [ALPHA] � High-Performance Native File Search for Java
 
 [![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastFileSearch/releases/tag/v0.1.0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -8,7 +8,7 @@
 
 ---
 
-**⚡ Lightning fast fuzzy and prefix search for millions of indexed files.**
+**? Lightning fast fuzzy and prefix search for millions of indexed files.**
 
 FastFileSearch provides **real-time search capabilities** for the FastJava ecosystem. Built on top of FastFileIndex, it
 allows for instant prefix, fuzzy, and exact matching across massive file collections with sub-millisecond response
@@ -19,7 +19,7 @@ times.
 [![FastKeyboard Showcase](docs/screenshot.png)](https://www.youtube.com/watch?v=BZsqQl7WqWk)
 
 ```java
-// Quick Start — Performing a search
+// Quick Start � Performing a search
 
 import fastfilesearch.FastFileSearch;
 import fastfilesearch.SearchResult;
@@ -53,9 +53,9 @@ public class SearchDemo {
 
 ## Key Features
 
-- **🚀 Native Performance** — Direct C++ search kernels for maximum speed.
-- **⚡ Fuzzy Matching** — Intelligent error-tolerant search algorithms.
-- **📦 Zero Overhead** — Highly optimized memory layout for search structures.
+- **?? Native Performance** � Direct C++ search kernels for maximum speed.
+- **? Fuzzy Matching** � Intelligent error-tolerant search algorithms.
+- **?? Zero Overhead** � Highly optimized memory layout for search structures.
 
 ---
 
@@ -118,10 +118,10 @@ dependencies {
 
 Download the latest JARs directly to add them to your classpath:
 
-1. 📦 *
+1. ?? *
    *[fastfilesearch-v0.1.0.jar](https://github.com/andrestubbe/FastFileSearch/releases/download/v0.1.0/fastfilesearch-v0.1.0.jar)
    ** (The Core Library)
-2. ⚙️ **[fastcore-v0.1.0.jar](https://github.com/andrestubbe/FastCore/releases/download/v0.1.0/fastcore-v0.1.0.jar)** (
+2. ?? **[fastcore-v0.1.0.jar](https://github.com/andrestubbe/FastCore/releases/download/v0.1.0/fastcore-v0.1.0.jar)** (
    The Mandatory Native Loader)
 
 > [!IMPORTANT]
@@ -148,7 +148,7 @@ Download the latest JARs directly to add them to your classpath:
 
 * **[COMPILE.md](docs/COMPILE.md)**: Full compilation guide (MSVC C++17 build chain + JNI Setup).
 * **[REFERENCE.md](docs/REFERENCE.md)**: Full API descriptions, border configurations, and codepoint index.
-* **[PHILOSOPHIE.md](docs/PHILOSOPHIE.md)**: The engineering rationale for zero-allocation performance.
+* **[PHILOSOPHY.md](docs/PHILOSOPHY.md)**: The engineering rationale for zero-allocation performance.
 * **[ROADMAP.md](docs/ROADMAP.md)**: Future milestones and planned features.
 
 ---
@@ -157,15 +157,15 @@ Download the latest JARs directly to add them to your classpath:
 
 | Platform      | Status            |
 |---------------|-------------------|
-| Windows 10/11 | ✅ Fully Supported |
-| Linux         | 🚧 Planned        |
-| macOS         | 🚧 Planned        |
+| Windows 10/11 | ? Fully Supported |
+| Linux         | ?? Planned        |
+| macOS         | ?? Planned        |
 
 ---
 
 ## License
 
-MIT License — See [LICENSE](LICENSE) file for details.
+MIT License � See [LICENSE](LICENSE) file for details.
 
 ---
 
@@ -178,4 +178,4 @@ MIT License — See [LICENSE](LICENSE) file for details.
 
 ---
 
-**Part of the FastJava Ecosystem** — *Making the JVM faster. Small package. Maximum speed. Zero bloat. 🚀📋*
+**Part of the FastJava Ecosystem** � *Making the JVM faster. Small package. Maximum speed. Zero bloat. ????*
