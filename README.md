@@ -8,7 +8,7 @@
 
 ---
 
-**? Lightning fast fuzzy and prefix search for millions of indexed files.**
+**🔍 Lightning fast fuzzy and prefix search for millions of indexed files.**
 
 FastFileSearch provides **real-time search capabilities** for the FastJava ecosystem. Built on top of FastFileIndex, it
 allows for instant prefix, fuzzy, and exact matching across massive file collections with sub-millisecond response
@@ -53,9 +53,9 @@ public class SearchDemo {
 
 ## Key Features
 
-- **ðŸš€ Native Performance**  Direct C++ search kernels for maximum speed.
-- **? Fuzzy Matching**  Intelligent error-tolerant search algorithms.
-- **ðŸš€ Zero Overhead**  Highly optimized memory layout for search structures.
+- **⚡ Native Performance**: Direct C++ search kernels for maximum speed.
+- **🧠 Fuzzy Matching**: Intelligent error-tolerant search algorithms.
+- **📦 Zero Overhead**: Highly optimized memory layout for search structures.
 
 ---
 
@@ -118,11 +118,8 @@ dependencies {
 
 Download the latest JARs directly to add them to your classpath:
 
-1. ðŸš€ *
-   *[fastfilesearch-0.1.0.jar](https://github.com/andrestubbe/FastFileSearch/releases/download/0.1.0/fastfilesearch-0.1.0.jar)
-   ** (The Core Library)
-2. ðŸš€ **[fastcore-0.1.0.jar](https://github.com/andrestubbe/FastCore/releases/download/0.1.0/fastcore-0.1.0.jar)** (
-   The Mandatory Native Loader)
+1. 📦 **[fastfilesearch-0.1.0.jar](https://github.com/andrestubbe/FastFileSearch/releases/download/0.1.0/fastfilesearch-0.1.0.jar)** (The Core Library)
+2. ⚙️ **[fastcore-0.1.0.jar](https://github.com/andrestubbe/FastCore/releases/download/0.1.0/fastcore-0.1.0.jar)** (The Mandatory Native Loader)
 
 > [!IMPORTANT]
 > All JARs must be in your classpath for the native JNI calls to function correctly.
@@ -157,9 +154,9 @@ Download the latest JARs directly to add them to your classpath:
 
 | Platform      | Status            |
 |---------------|-------------------|
-| Windows 10/11 | ? Fully Supported |
-| Linux         | ðŸš€ Planned        |
-| macOS         | ðŸš€ Planned        |
+| Windows 10/11 | ✅ Fully Supported |
+| Linux         | 🔗 Planned        |
+| macOS         | 🔗 Planned        |
 
 ---
 
@@ -178,4 +175,4 @@ MIT License  See [LICENSE](LICENSE) file for details.
 
 ---
 
-**Part of the FastJava Ecosystem**  *Making the JVM faster. Small package. Maximum speed. Zero bloat. ðŸš€ðŸš€*
+**Part of the FastJava Ecosystem** — *Making the JVM faster. Small package. Maximum speed. Zero bloat. 🚀📋*
