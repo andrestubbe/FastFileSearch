@@ -18,19 +18,27 @@ times.
 
 [![FastKeyboard Showcase](docs/screenshot.png)](https://www.youtube.com/watch?v=BZsqQl7WqWk)
 
-```java
-// Quick Start  Performing a search
+---
 
+## Quick Start
+
+```java
+import fastfileindex.FastFileIndex;
 import fastfilesearch.FastFileSearch;
 import fastfilesearch.SearchResult;
 
-public class SearchDemo {
+public class Demo {
     public static void main(String[] args) {
-        FastFileSearch engine = FastFileSearch.fromIndex(myIndex, options);
+        // 1. Build or attach to index
+        FastFileIndex.build(new String[] { "C:\\" });
 
-        // Instant fuzzy search
-        SearchResult[] results = engine.fuzzy("myapp", 100);
-        System.out.println("Found " + results.length + " matches!");
+        // 2. Perform instant fuzzy / prefix search across millions of paths
+        FastFileSearch search = new FastFileSearch();
+        SearchResult[] results = search.fuzzy("config", 10);
+
+        for (SearchResult res : results) {
+            System.out.printf("[Score: %d] %s\n", res.getScore(), res.getPath());
+        }
     }
 }
 ```
