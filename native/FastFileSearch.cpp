@@ -1,4 +1,5 @@
 #include <jni.h>
+#include <windows.h>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -6,9 +7,20 @@
 
 using namespace std;
 
+struct FileEntry {
+    uint64_t id;
+    uint64_t parentId;
+    uint64_t size;
+    uint64_t modified;
+    uint32_t type;
+    string path;
+};
+
+typedef void* (*GetEntriesFn)();
+
 static string toLower(const string& str) {
     string lower = str;
-    transform(lower.begin(), lower.end(), lower.begin(), [](unsigned char c) { return tolower(c); });
+    transform(lower.begin(), lower.end(), lower.begin(), [](unsigned char c) { return (char)tolower(c); });
     return lower;
 }
 
@@ -21,7 +33,6 @@ JNIEXPORT jobject JNICALL Java_fastfilesearch_FastFileSearch_fromIndexNative(JNI
 }
 
 JNIEXPORT void JNICALL Java_fastfilesearch_FastFileSearch_close(JNIEnv* env, jobject obj) {
-    // No-op cleanup
 }
 
 JNIEXPORT jobjectArray JNICALL Java_fastfilesearch_FastFileSearch_prefix(JNIEnv* env, jobject obj, jobject jQuery, jobject jOptions) {
@@ -40,7 +51,7 @@ JNIEXPORT jobjectArray JNICALL Java_fastfilesearch_FastFileSearch_prefix(JNIEnv*
     jclass optionsClass = env->GetObjectClass(jOptions);
     jmethodID getLimitMethod = env->GetMethodID(optionsClass, "limit", "()I");
     int limit = (int)env->CallIntMethod(jOptions, getLimitMethod);
-    if (limit <= 0) limit = 50;
+    if (limit <= 0) limit = 10000;
 
     jclass resultClass = env->FindClass("fastfilesearch/SearchResult");
     if (resultClass == NULL) return NULL;
@@ -48,45 +59,39 @@ JNIEXPORT jobjectArray JNICALL Java_fastfilesearch_FastFileSearch_prefix(JNIEnv*
     jmethodID resultConstructor = env->GetMethodID(resultClass, "<init>", "(Ljava/lang/String;DJJ)V");
     if (resultConstructor == NULL) return NULL;
 
-    // Call fastfileindex.FastFileIndex via JNI reflections
-    jclass ffiClass = env->FindClass("fastfileindex/FastFileIndex");
-    if (ffiClass == NULL) {
-        return env->NewObjectArray(0, resultClass, NULL);
-    }
-
-    jmethodID getCountMethod = env->GetStaticMethodID(ffiClass, "getEntryCount", "()J");
-    jmethodID getPathMethod = env->GetStaticMethodID(ffiClass, "getEntryPath", "(J)Ljava/lang/String;");
-    jmethodID getSizeMethod = env->GetStaticMethodID(ffiClass, "getEntrySize", "(J)J");
-    jmethodID getModMethod = env->GetStaticMethodID(ffiClass, "getEntryModified", "(J)J");
-
-    if (!getCountMethod || !getPathMethod) {
-        return env->NewObjectArray(0, resultClass, NULL);
-    }
-
-    jlong totalCount = env->CallStaticLongMethod(ffiClass, getCountMethod);
-    vector<jobject> matchedResults;
-
-    for (jlong i = 0; i < totalCount && (int)matchedResults.size() < limit; i++) {
-        jstring jpath = (jstring)env->CallStaticObjectMethod(ffiClass, getPathMethod, i);
-        if (jpath == NULL) continue;
-
-        const char* pathChars = env->GetStringUTFChars(jpath, nullptr);
-        string pathStr = pathChars;
-        env->ReleaseStringUTFChars(jpath, pathChars);
-
-        size_t lastSlash = pathStr.find_last_of("/\\");
-        string filename = (lastSlash == string::npos) ? pathStr : pathStr.substr(lastSlash + 1);
-        string filenameLower = toLower(filename);
-
-        if (filenameLower.find(queryLower) == 0 || pathStr.find(queryStr) != string::npos) {
-            jlong fileSize = getSizeMethod ? env->CallStaticLongMethod(ffiClass, getSizeMethod, i) : 0;
-            jlong modified = getModMethod ? env->CallStaticLongMethod(ffiClass, getModMethod, i) : 0;
-            double score = (filenameLower.find(queryLower) == 0) ? 1.0 : 0.8;
-
-            jobject resObj = env->NewObject(resultClass, resultConstructor, jpath, (jdouble)score, fileSize, modified);
-            matchedResults.push_back(resObj);
+    // Direct C++ memory access: obtain pointer to g_entries from fastfileindex.dll
+    vector<FileEntry>* pEntries = nullptr;
+    HMODULE hIndexDll = GetModuleHandleA("fastfileindex.dll");
+    if (hIndexDll) {
+        GetEntriesFn getFn = (GetEntriesFn)GetProcAddress(hIndexDll, "FastFileIndex_getNativeEntriesHandle");
+        if (getFn) {
+            pEntries = (vector<FileEntry>*)getFn();
         }
-        env->DeleteLocalRef(jpath);
+    }
+
+    vector<jobject> matchedResults;
+    matchedResults.reserve(min(limit, 500));
+
+    if (pEntries) {
+        // Fast direct C++ scan: 0 JNI cross-boundary overhead during traversal!
+        const vector<FileEntry>& entries = *pEntries;
+        size_t total = entries.size();
+        for (size_t i = 0; i < total && (int)matchedResults.size() < limit; i++) {
+            const FileEntry& e = entries[i];
+            const string& pathStr = e.path;
+
+            size_t lastSlash = pathStr.find_last_of("/\\");
+            string filename = (lastSlash == string::npos) ? pathStr : pathStr.substr(lastSlash + 1);
+            string filenameLower = toLower(filename);
+
+            if (filenameLower.find(queryLower) == 0 || pathStr.find(queryStr) != string::npos) {
+                jstring jpath = env->NewStringUTF(pathStr.c_str());
+                double score = (filenameLower.find(queryLower) == 0) ? 1.0 : 0.8;
+                jobject resObj = env->NewObject(resultClass, resultConstructor, jpath, (jdouble)score, (jlong)e.size, (jlong)e.modified);
+                matchedResults.push_back(resObj);
+                env->DeleteLocalRef(jpath);
+            }
+        }
     }
 
     jobjectArray array = env->NewObjectArray((jsize)matchedResults.size(), resultClass, NULL);
