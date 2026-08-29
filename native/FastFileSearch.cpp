@@ -14,6 +14,7 @@ struct FileEntry {
     uint64_t modified;
     uint32_t type;
     string path;
+    string filenameLower;
 };
 
 typedef void* (*GetEntriesFn)();
@@ -73,20 +74,20 @@ JNIEXPORT jobjectArray JNICALL Java_fastfilesearch_FastFileSearch_prefix(JNIEnv*
     matchedResults.reserve(min(limit, 500));
 
     if (pEntries) {
-        // Fast direct C++ scan: 0 JNI cross-boundary overhead during traversal!
         const vector<FileEntry>& entries = *pEntries;
         size_t total = entries.size();
+        size_t qLen = queryLower.length();
+
+        // Ultra-fast zero-allocation search using pre-lowercased filename
         for (size_t i = 0; i < total && (int)matchedResults.size() < limit; i++) {
             const FileEntry& e = entries[i];
-            const string& pathStr = e.path;
+            const string& fnLower = e.filenameLower;
 
-            size_t lastSlash = pathStr.find_last_of("/\\");
-            string filename = (lastSlash == string::npos) ? pathStr : pathStr.substr(lastSlash + 1);
-            string filenameLower = toLower(filename);
-
-            if (filenameLower.find(queryLower) == 0 || pathStr.find(queryStr) != string::npos) {
-                jstring jpath = env->NewStringUTF(pathStr.c_str());
-                double score = (filenameLower.find(queryLower) == 0) ? 1.0 : 0.8;
+            // Instant exact/prefix match without allocating new strings
+            bool isPrefix = (fnLower.compare(0, qLen, queryLower) == 0);
+            if (isPrefix || fnLower.find(queryLower) != string::npos) {
+                jstring jpath = env->NewStringUTF(e.path.c_str());
+                double score = isPrefix ? 1.0 : 0.8;
                 jobject resObj = env->NewObject(resultClass, resultConstructor, jpath, (jdouble)score, (jlong)e.size, (jlong)e.modified);
                 matchedResults.push_back(resObj);
                 env->DeleteLocalRef(jpath);
