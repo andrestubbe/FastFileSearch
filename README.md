@@ -101,6 +101,17 @@ FastFileSearch is designed for live "search-as-you-type" interfaces.
 
 ---
 
+## Technical Demos & Benchmarks
+
+Run standalone verification demos:
+
+| Type | Target / Launcher | Source File | Description |
+| :--- | :--- | :--- | :--- |
+| **Interactive Demo** | [`run-demo.bat`](run-demo.bat) | [`Demo.java`](examples/Demo/src/main/java/fastfilesearch/Demo.java) | Real-time interactive search-as-you-type UI with timeline filtering |
+| **Hero Showcase Demo** | [`run-demo2.bat`](run-demo2.bat) | [`Demo2.java`](examples/Demo/src/main/java/fastfilesearch/Demo2.java) | Full borderless overlay demo with animated UI timeline and instant matching |
+
+---
+
 ## Installation
 
 ### Option 1: Maven (Recommended)
@@ -155,17 +166,6 @@ Download the latest JARs directly to add them to your classpath:
 
 > [!IMPORTANT]
 > All JARs must be in your classpath for the native JNI calls to function correctly.
-
----
-
-## Technical Demos & Benchmarks
-
-Run standalone verification demos:
-
-| Type | Target / Launcher | Source File | Description |
-| :--- | :--- | :--- | :--- |
-| **Interactive Demo** | [`run-demo.bat`](run-demo.bat) | [`Demo.java`](examples/Demo/src/main/java/fastfilesearch/Demo.java) | Real-time interactive search-as-you-type UI with timeline filtering |
-| **Hero Showcase Demo** | [`run-demo2.bat`](run-demo2.bat) | [`Demo2.java`](examples/Demo/src/main/java/fastfilesearch/Demo2.java) | Full borderless overlay demo with animated UI timeline and instant matching |
 
 ---
 
