@@ -50,9 +50,10 @@ public class Demo {
 - [Why FastFileSearch?](#why-fastfilesearch)
 - [Key Features](#key-features)
 - [Performance](#performance)
+- [Technical Demos & Benchmarks](#technical-demos--benchmarks)
 - [Installation](#installation)
-- [Try the Demo](#try-the-demo)
 - [API Reference](#api-reference)
+- [Documentation](#documentation)
 - [Platform Support](#platform-support)
 - [Building from Source](#building-from-source)
 - [License](#license)
@@ -155,11 +156,16 @@ Download the latest JARs directly to add them to your classpath:
 > [!IMPORTANT]
 > All JARs must be in your classpath for the native JNI calls to function correctly.
 
-## Try the Demo
+---
 
-1. Clone this repository.
-2. Run `run-demo.bat`.
-3. Experience the "Instant" search-as-you-type interface.
+## Technical Demos & Benchmarks
+
+Run standalone verification demos:
+
+| Type | Target / Launcher | Source File | Description |
+| :--- | :--- | :--- | :--- |
+| **Interactive Demo** | [`run-demo.bat`](run-demo.bat) | [`Demo.java`](examples/Demo/src/main/java/fastfilesearch/Demo.java) | Real-time interactive search-as-you-type UI with timeline filtering |
+| **Hero Showcase Demo** | [`run-demo2.bat`](run-demo2.bat) | [`Demo2.java`](examples/Demo/src/main/java/fastfilesearch/Demo2.java) | Full borderless overlay demo with animated UI timeline and instant matching |
 
 ---
 
